@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Auth from './components/Auth';
 import Navbar from './components/Navbar';
+import RecipeList from './components/RecipeList';
+import Recipe from './components/Recipe';
 import Parse from './parseConfig';
 
 function App() {
@@ -55,10 +57,14 @@ function App() {
               } />
               <Route path="/" element={
                 isAuthenticated ? (
-                  <div className="text-center mt-8">
-                    <h1 className="text-2xl font-bold text-gray-800">Bienvenue !</h1>
-                    <p className="mt-4 text-gray-600">Vous êtes connecté.</p>
-                  </div>
+                  <RecipeList />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } />
+              <Route path="/recipe/:slug" element={
+                isAuthenticated ? (
+                  <Recipe />
                 ) : (
                   <Navigate to="/login" replace />
                 )
